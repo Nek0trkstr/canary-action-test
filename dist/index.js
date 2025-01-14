@@ -31236,7 +31236,7 @@ async function run() {
 
     const octokit = new githubExports.getOctokit(token);
 
-    const result = await octokit.repos.getContent({
+    const result = await octokit.rest.repos.getContent({
       owner: 'payrails',
       repo: 'infrastructure',
       path: 'deployments/clusters/staging/merchant01/sandbox-backend/release.yaml'
