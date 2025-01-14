@@ -1,5 +1,5 @@
-name: The name of your action here
-description: Provide a description here
+name: Canary Deploy
+description: Opens PR with a canary deploy
 author: Your name or organization here
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
@@ -9,15 +9,18 @@ branding:
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  version:
+    description: Version to deploy
     required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: Your output description here
+  merchant:
+    description: Which merchant to update
+    required: true
+  environment:
+    description: Which environment to update
+    required: true
+  token:
+    description: The token to use to access the GitHub API
+    required: true
 
 runs:
   using: node20
