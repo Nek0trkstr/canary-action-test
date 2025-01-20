@@ -18,6 +18,9 @@ inputs:
   environment:
     description: Which environment to update
     required: true
+  cluster:
+    description: Name of the cluster to deploy to
+    required: true
   token:
     description: The token to use to access the GitHub API
     required: true

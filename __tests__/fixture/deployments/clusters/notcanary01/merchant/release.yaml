@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: app
+  namespace: app
+spec:
+  chart:
+    spec:
+      chart: ./index/app-1.0.0.tgz
+      sourceRef:
+        kind: GitRepository
+        name: charts
+        namespace: flux-system
+      valuesFiles:
+      - values.yaml
+      interval: 1m
+      reconcileStrategy: ChartVersion
+  values:
+    image:
+      tag: v1
+    stage:
+      stable:
+        image:
+          tag: v1
+      canary:
+        image:
+          tag: v2
+    unusedValues:
+      foo: bar
