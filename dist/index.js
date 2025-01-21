@@ -38764,6 +38764,7 @@ class Deployer {
     try {
       await this.client.getContent(canaryFile);
     } catch (err) {
+      console.log(err);
       if (err.status == 404) {
         return false
       }
