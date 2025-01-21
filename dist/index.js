@@ -31293,7 +31293,7 @@ class GitHubClient {
     });
   }
 
-  async openPR(title, body, headBranch, baseBranch = 'main') {
+  async openPR(title, body, headBranch, baseBranch = 'master') {
     let PRCreated = false;
     const openedPRs = await this.client.request(
       'GET /repos/{owner}/{repo}/pulls',
