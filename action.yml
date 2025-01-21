@@ -21,6 +21,12 @@ inputs:
   cluster:
     description: Name of the cluster to deploy to
     required: true
+  service:
+    description: Name of the service
+    required: true
+  stage:
+    description: Name of the stage
+    required: true
   token:
     description: The token to use to access the GitHub API
     required: true
