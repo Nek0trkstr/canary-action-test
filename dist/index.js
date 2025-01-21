@@ -31298,8 +31298,8 @@ class GitHubClient {
     const openedPRs = await this.client.request(
       'GET /repos/{owner}/{repo}/pulls',
       {
-        owner: 'Nek0trkstr',
-        repo: 'canary-action-test',
+        owner: this.owner,
+        repo: this.repo,
         state: 'open'
       }
     );
@@ -31317,8 +31317,8 @@ class GitHubClient {
     }
 
     await this.client.rest.pulls.create({
-      owner: 'Nek0trkstr',
-      repo: 'canary-action-test',
+      owner: this.owner,
+      repo: this.repo,
       head: headBranch,
       base: baseBranch,
       title: title,
