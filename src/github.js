@@ -7,7 +7,7 @@ export default class GitHubClient {
     this.repo = repo
   }
 
-  async getContent(filePath, branch="master") {
+  async getContent(filePath, branch = 'master') {
     const result = await this.client.rest.repos.getContent({
       owner: this.owner,
       repo: this.repo,

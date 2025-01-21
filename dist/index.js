@@ -31229,7 +31229,7 @@ class GitHubClient {
     this.repo = repo;
   }
 
-  async getContent(filePath, branch) {
+  async getContent(filePath, branch = 'master') {
     const result = await this.client.rest.repos.getContent({
       owner: this.owner,
       repo: this.repo,
