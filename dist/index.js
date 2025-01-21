@@ -38801,7 +38801,7 @@ class Deployer {
  */
 async function run() {
   try {
-    const repositoryOwner = coreExports.getInput('repoOwner');
+    const repositoryOwner = coreExports.getInput('repositoryOwner');
     const repository = coreExports.getInput('repository');
     const env = coreExports.getInput('environment');
     const merchant = coreExports.getInput('merchant');
