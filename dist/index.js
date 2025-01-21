@@ -38786,10 +38786,10 @@ class Deployer {
     return YAML.stringify(releaseYaml)
   }
 
-  async proposeChange(updatedRelease, version) {
+  async proposeChange(updatedRelease, version, baseBranch = 'master') {
     const prName = `Release ${this.merchant}-${this.service} ${version}`;
     const branchName = prName.toLowerCase().replaceAll(' ', '-');
-    this.client.updateFile(this.releaseFileLocation, updatedRelease, branchName);
+    this.client.updateFile(this.releaseFileLocation, updatedRelease, baseBranch);
     this.client.openPR(prName, prName, branchName);
   }
 }
