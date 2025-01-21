@@ -9,7 +9,7 @@ import Deployer from './deployer'
  */
 export async function run() {
   try {
-    const repositoryOwner = core.getInput('repoOwner')
+    const repositoryOwner = core.getInput('repositoryOwner')
     const repository = core.getInput('repository')
     const env = core.getInput('environment')
     const merchant = core.getInput('merchant')
