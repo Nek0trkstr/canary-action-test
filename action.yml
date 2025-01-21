@@ -9,6 +9,12 @@ branding:
 
 # Define your inputs here.
 inputs:
+  repositoryOwner:
+    description: Name of the organization that owns the repo
+    default: Nek0trkstr
+  repository:
+    description: Name of the repository
+    default: canary-action-test
   version:
     description: Version to deploy
     required: true

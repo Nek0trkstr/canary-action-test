@@ -9,6 +9,8 @@ import Deployer from './deployer'
  */
 export async function run() {
   try {
+    const repositoryOwner = core.getInput('repoOwner')
+    const repository = core.getInput('repository')
     const env = core.getInput('environment')
     const merchant = core.getInput('merchant')
     const version = core.getInput('version')
@@ -17,7 +19,7 @@ export async function run() {
     const stage = core.getInput('stage')
     const token = core.getInput('token')
 
-    const ghClient = new GitHubClient(token)
+    const ghClient = new GitHubClient(token, repositoryOwner, repository)
     const deployer = new Deployer(ghClient, env, cluster, merchant, service)
 
     const canaryEnabled = await deployer.isCanaryEnabled()    
