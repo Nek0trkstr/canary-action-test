@@ -38759,6 +38759,8 @@ class Deployer {
 
   async isCanaryEnabled() {
     const canaryFile = `deployments/clusters/${this.environment}/${this.cluster}/.canary-enabled`;
+
+    console.log(`Checking ${canaryFile}`);
     try {
       await this.client.getContent(canaryFile);
     } catch (err) {
