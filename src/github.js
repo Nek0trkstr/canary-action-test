@@ -42,7 +42,7 @@ export default class GitHubClient {
     }
   }
 
-  async updateFile(filePath, content, branch) {
+  async updateFile(filePath, content, branch = 'master') {
     const originalFile = await this.client.rest.repos.getContent({
       owner: this.owner,
       repo: this.repo,

@@ -31264,7 +31264,7 @@ class GitHubClient {
     }
   }
 
-  async updateFile(filePath, content, branch) {
+  async updateFile(filePath, content, branch = 'master') {
     const originalFile = await this.client.rest.repos.getContent({
       owner: this.owner,
       repo: this.repo,
@@ -38786,10 +38786,11 @@ class Deployer {
     return YAML.stringify(releaseYaml)
   }
 
-  async proposeChange(updatedRelease, version, baseBranch = 'master') {
+  async proposeChange(updatedRelease, version) {
     const prName = `Release ${this.merchant}-${this.service} ${version}`;
     const branchName = prName.toLowerCase().replaceAll(' ', '-');
-    this.client.updateFile(this.releaseFileLocation, updatedRelease, baseBranch);
+    this.client.createBranch(branchName);
+    this.client.updateFile(this.releaseFileLocation, updatedRelease);
     this.client.openPR(prName, prName, branchName);
   }
 }
