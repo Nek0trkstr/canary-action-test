@@ -22,7 +22,7 @@ export default class GitHubClient {
     const shaRef = await this.client.rest.git.getRef({
       owner: this.owner,
       repo: this.repo,
-      ref: 'heads/main'
+      ref: 'heads/master'
     })
 
     try {
