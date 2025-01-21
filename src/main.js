@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import GitHubClient from "./github"
+import GitHubClient from './github'
 import Deployer from './deployer'
 
 /**
@@ -22,14 +22,15 @@ export async function run() {
     const ghClient = new GitHubClient(token, repositoryOwner, repository)
     const deployer = new Deployer(ghClient, env, cluster, merchant, service)
 
-    const canaryEnabled = await deployer.isCanaryEnabled()    
+    const canaryEnabled = await deployer.isCanaryEnabled()
     if (!canaryEnabled) {
-      throw Error(`Canary is not available for ${env}/${cluster}. Make sure canary is supported by the cluster and .canary-enabled file exists`)
+      throw Error(
+        `Canary is not available for ${env}/${cluster}. Make sure canary is supported by the cluster and .canary-enabled file exists`
+      )
     }
 
     const newRelease = await deployer.updateRelease(version, stage)
     await deployer.proposeChange(newRelease, version)
-
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)

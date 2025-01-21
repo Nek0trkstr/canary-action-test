@@ -14,9 +14,8 @@ export default class Deployer {
     const canaryFile = `deployments/clusters/${this.environment}/${this.cluster}/.canary-enabled`
     try {
       await this.client.getContent(canaryFile)
-    }
-    catch(err) {
-      if(err.status == 404) {
+    } catch (err) {
+      if (err.status == 404) {
         return false
       }
 
@@ -28,9 +27,12 @@ export default class Deployer {
 
   async updateRelease(version, stage) {
     const releaseFile = await this.client.getContent(this.releaseFileLocation)
-    const oldRelease = Buffer.from(releaseFile.data.content, 'base64').toString()
+    const oldRelease = Buffer.from(
+      releaseFile.data.content,
+      'base64'
+    ).toString()
     let releaseYaml = YAML.parse(oldRelease)
-    releaseYaml["spec"]["values"]["stage"][stage]["image"]["tag"] = version
+    releaseYaml['spec']['values']['stage'][stage]['image']['tag'] = version
     return YAML.stringify(releaseYaml)
   }
 
@@ -38,6 +40,6 @@ export default class Deployer {
     const prName = `Release ${this.merchant}-${this.service} ${version}`
     const branchName = prName.toLowerCase().replaceAll(' ', '-')
     this.client.updateFile(this.releaseFileLocation, updatedRelease, branchName)
-    this.client.openPR(prName, prName ,branchName)
+    this.client.openPR(prName, prName, branchName)
   }
 }

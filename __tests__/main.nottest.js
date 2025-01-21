@@ -12,7 +12,7 @@ import * as GitHubClient from '../src/github.js'
 // Mocks should be declared before the module being tested is imported.
 jest.unstable_mockModule('@actions/core', () => core)
 // jest.unstable_mockModule('../src/github.js', () => GitHubClient)
-jest.mock('./src/github.js');
+jest.mock('./src/github.js')
 // The module being tested should be imported dynamically. This ensures that the
 // mocks are used in place of any actual dependencies.
 const { run } = await import('../src/main.js')
@@ -21,7 +21,7 @@ describe('main.js', () => {
   beforeEach(() => {
     // Set the action's inputs as return values from core.getInput().
     core.getInput.mockImplementation(function (argument) {
-      switch(argument) {
+      switch (argument) {
         case 'environment':
           return 'staging'
         case 'merchant':

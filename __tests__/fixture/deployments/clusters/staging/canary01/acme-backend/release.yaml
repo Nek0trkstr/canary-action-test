@@ -12,7 +12,7 @@ spec:
         name: charts
         namespace: flux-system
       valuesFiles:
-      - values.yaml
+        - values.yaml
       interval: 1m
       reconcileStrategy: ChartVersion
   values:
