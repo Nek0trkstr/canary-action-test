@@ -31317,14 +31317,14 @@ class GitHubClient {
       return
     }
 
-    await this.client.rest.pulls.create({
+    return await this.client.rest.pulls.create({
       owner: this.owner,
       repo: this.repo,
       head: headBranch,
       base: baseBranch,
       title: title,
       body: body
-    });
+    })
   }
 }
 
