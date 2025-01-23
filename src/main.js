@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import chalk from 'chalk'
+import printDiff from './colorLogger'
 import GitHubClient from './github'
 import Deployer from './deployer'
 
@@ -40,16 +40,4 @@ export async function run() {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
-}
-
-function printDiff(diff) {
-  diff.split('\n').forEach((line) => {
-    if (line.startsWith('+') && !line.startsWith('+++')) {
-      console.log(chalk.green(line))
-    } else if (line.startsWith('-') && !line.startsWith('---')) {
-      console.log(chalk.red(line))
-    } else {
-      console.log(line)
-    }
-  })
 }

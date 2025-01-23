@@ -27748,6 +27748,19 @@ Object.defineProperties(createChalk.prototype, styles);
 const chalk = createChalk();
 createChalk({level: stderrColor ? stderrColor.level : 0});
 
+function printDiff(diff) {
+  diff.split('\n').forEach((line) => {
+    line = line.trimStart();
+    if (line.startsWith('+') && !line.startsWith('+++')) {
+      console.log(chalk.green(line));
+    } else if (line.startsWith('-') && !line.startsWith('---')) {
+      console.log(chalk.red(line));
+    } else {
+      console.log(line);
+    }
+  });
+}
+
 class PR {
   constructor(number, diff, link) {
     this.number = number;
@@ -39340,18 +39353,6 @@ async function run() {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) coreExports.setFailed(error.message);
   }
-}
-
-function printDiff(diff) {
-  diff.split('\n').forEach((line) => {
-    if (line.startsWith('+') && !line.startsWith('+++')) {
-      console.log(chalk.green(line));
-    } else if (line.startsWith('-') && !line.startsWith('---')) {
-      console.log(chalk.red(line));
-    } else {
-      console.log(line);
-    }
-  });
 }
 
 /**
