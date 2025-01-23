@@ -31259,6 +31259,7 @@ class GitHubClient {
         err.response.data.status == 422 &&
         err.response.data.message == 'Reference already exists'
       ) {
+        console.log(`Branch ${branchName} already exists - skipping`);
         return
       }
     }

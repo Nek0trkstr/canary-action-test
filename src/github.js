@@ -52,7 +52,7 @@ export default class GitHubClient {
     })
 
     const originalFileSHA = originalFile.data.sha
-    
+
     await this.client.rest.repos.createOrUpdateFileContents({
       owner: this.owner,
       repo: this.repo,
