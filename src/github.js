@@ -96,7 +96,7 @@ export default class GitHubClient {
     if (PRCreated) {
       console.log('PR is already created - skipping PR creation')
     } else {
-      targetPR = await this.client.rest.pulls.create({
+      const prResp = await this.client.rest.pulls.create({
         owner: this.owner,
         repo: this.repo,
         head: headBranch,
@@ -104,6 +104,7 @@ export default class GitHubClient {
         title: title,
         body: body
       })
+      targetPR = prResp.data
     }
 
     console.log(JSON.stringify(targetPR))
