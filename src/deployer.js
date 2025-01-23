@@ -46,7 +46,6 @@ export default class Deployer {
       updatedRelease,
       branchName
     )
-    const PR = await this.client.openPR(prName, prName, branchName)
-    console.log(JSON.stringify(PR))
+    return pr = await this.client.openPR(prName, prName, branchName)
   }
 }

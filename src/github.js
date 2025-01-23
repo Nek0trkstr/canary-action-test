@@ -1,3 +1,4 @@
+import PR from './models/pr'
 import * as github from '@actions/github'
 
 export default class GitHubClient {
@@ -73,6 +74,7 @@ export default class GitHubClient {
   }
 
   async openPR(title, body, headBranch, baseBranch = 'master') {
+    let targetPR;
     let PRCreated = false
     const openedPRs = await this.client.request(
       'GET /repos/{owner}/{repo}/pulls',
@@ -87,21 +89,35 @@ export default class GitHubClient {
       const headBranchPR = pr.head.ref
       if (headBranchPR == headBranch) {
         PRCreated = true
+        targetPR = pr
       }
     })
 
     if (PRCreated) {
       console.log('PR is already created - skipping PR creation')
-      return
+    }
+    else {
+      targetPR = await this.client.rest.pulls.create({
+        owner: this.owner,
+        repo: this.repo,
+        head: headBranch,
+        base: baseBranch,
+        title: title,
+        body: body
+      }).data
     }
 
-    return await this.client.rest.pulls.create({
+    const prNumber = targetPR.number
+    const prLink = targetPR._links.html
+    const prDiff = await octokit.rest.pulls.get({
       owner: this.owner,
       repo: this.repo,
-      head: headBranch,
-      base: baseBranch,
-      title: title,
-      body: body
-    })
+      pull_number: prNumber,
+      mediaType: {
+        format: "diff",
+      },
+    }).data.prDiff
+
+    return new PR(prNumber, prDiff, prLink)
   }
 }
