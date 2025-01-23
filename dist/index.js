@@ -31842,7 +31842,7 @@ class GitHubClient {
       });
     }
 
-    console.log(targetPR);
+    console.log(JSON.stringify(targetPR));
     const prNumber = targetPR.number;
     const prLink = targetPR._links.html.href;
     const diffResp = await this.client.rest.pulls.get({
