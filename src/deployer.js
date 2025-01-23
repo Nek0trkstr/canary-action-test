@@ -47,6 +47,6 @@ export default class Deployer {
       branchName
     )
     const PR = await this.client.openPR(prName, prName, branchName)
-    console.log(json.stringify(PR))
+    console.log(JSON.stringify(PR))
   }
 }

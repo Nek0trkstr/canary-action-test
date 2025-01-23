@@ -38794,7 +38794,8 @@ class Deployer {
       updatedRelease,
       branchName
     );
-    await this.client.openPR(prName, prName, branchName);
+    const PR = await this.client.openPR(prName, prName, branchName);
+    console.log(JSON.stringify(PR));
   }
 }
 
