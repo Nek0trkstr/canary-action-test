@@ -1,4 +1,5 @@
-import chalk from 'chalk'
+import { Chalk } from 'chalk'
+const chalk = new Chalk({ level: 2 })
 
 export default function printDiff(diff) {
   diff.split('\n').forEach((line) => {

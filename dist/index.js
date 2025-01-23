@@ -27582,6 +27582,13 @@ const applyOptions = (object, options = {}) => {
 	object.level = options.level === undefined ? colorLevel : options.level;
 };
 
+class Chalk {
+	constructor(options) {
+		// eslint-disable-next-line no-constructor-return
+		return chalkFactory(options);
+	}
+}
+
 const chalkFactory = options => {
 	const chalk = (...strings) => strings.join(' ');
 	applyOptions(chalk, options);
@@ -27745,8 +27752,10 @@ const applyStyle = (self, string) => {
 
 Object.defineProperties(createChalk.prototype, styles);
 
-const chalk = createChalk();
+createChalk();
 createChalk({level: stderrColor ? stderrColor.level : 0});
+
+const chalk = new Chalk({ level: 2 });
 
 function printDiff(diff) {
   diff.split('\n').forEach((line) => {
