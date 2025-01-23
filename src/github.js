@@ -107,7 +107,7 @@ export default class GitHubClient {
     }
 
     const prNumber = targetPR.number
-    const prLink = targetPR._links.html
+    const prLink = targetPR._links.html.href
     const diffResp = await this.client.rest.pulls.get({
       owner: this.owner,
       repo: this.repo,
@@ -116,7 +116,6 @@ export default class GitHubClient {
         format: 'diff'
       }
     })
-    console.log(diffResp)
     const prDiff = diffResp.data.prDiff
 
     return new PR(prNumber, prDiff, prLink)
