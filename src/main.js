@@ -29,8 +29,11 @@ export async function run() {
       )
     }
 
+    const prName = `Release ${merchant}-${service} ${version}`
+    const branchName = prName.toLowerCase().replaceAll(' ', '-')
+
     const newRelease = await deployer.updateRelease(version, stage)
-    await deployer.proposeChange(newRelease, version)
+    await deployer.proposeChange(newRelease, prName, branchName)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
