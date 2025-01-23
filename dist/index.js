@@ -38786,11 +38786,9 @@ class Deployer {
     return YAML.stringify(releaseYaml)
   }
 
-  async proposeChange(updatedRelease, version) {
-    const prName = `Release ${this.merchant}-${this.service} ${version}`;
-    const branchName = prName.toLowerCase().replaceAll(' ', '-');
+  async proposeChange(updatedRelease, prName, branchName) {
     this.client.createBranch(branchName);
-    this.client.updateFile(this.releaseFileLocation, updatedRelease);
+    this.client.updateFile(this.releaseFileLocation, updatedRelease, branchName);
     this.client.openPR(prName, prName, branchName);
   }
 }
@@ -38822,8 +38820,11 @@ async function run() {
       )
     }
 
+    const prName = `Release ${merchant}-${service} ${version}`;
+    const branchName = prName.toLowerCase().replaceAll(' ', '-');
+
     const newRelease = await deployer.updateRelease(version, stage);
-    await deployer.proposeChange(newRelease, version);
+    await deployer.proposeChange(newRelease, prName, branchName);
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) coreExports.setFailed(error.message);
