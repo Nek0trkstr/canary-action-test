@@ -41,7 +41,11 @@ export default class Deployer {
 
   async proposeChange(updatedRelease, prName, branchName) {
     await this.client.createBranch(branchName)
-    await this.client.updateFile(this.releaseFileLocation, updatedRelease, branchName)
+    await this.client.updateFile(
+      this.releaseFileLocation,
+      updatedRelease,
+      branchName
+    )
     await this.client.openPR(prName, prName, branchName)
   }
 }

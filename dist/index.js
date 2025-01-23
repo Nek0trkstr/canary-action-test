@@ -38788,9 +38788,13 @@ class Deployer {
   }
 
   async proposeChange(updatedRelease, prName, branchName) {
-    this.client.createBranch(branchName);
-    this.client.updateFile(this.releaseFileLocation, updatedRelease, branchName);
-    this.client.openPR(prName, prName, branchName);
+    await this.client.createBranch(branchName);
+    await this.client.updateFile(
+      this.releaseFileLocation,
+      updatedRelease,
+      branchName
+    );
+    await this.client.openPR(prName, prName, branchName);
   }
 }
 
