@@ -1,7 +1,7 @@
 import { Chalk } from 'chalk'
 const chalk = new Chalk({ level: 2 })
 
-export default function printDiff(diff) {
+function printDiff(diff) {
   diff.split('\n').forEach((line) => {
     const trimmedLine = line.trimStart()
     if (trimmedLine.startsWith('+') && !trimmedLine.startsWith('+++')) {
@@ -13,3 +13,9 @@ export default function printDiff(diff) {
     }
   })
 }
+
+function printColorful(text) {
+  console.log(chalk.cyan(text))
+}
+
+export { printDiff, printColorful }

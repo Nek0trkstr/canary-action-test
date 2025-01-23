@@ -27770,6 +27770,10 @@ function printDiff(diff) {
   });
 }
 
+function printColorful(text) {
+  console.log(chalk.cyan(text));
+}
+
 class PR {
   constructor(number, diff, link) {
     this.number = number;
@@ -39357,7 +39361,11 @@ async function run() {
 
     const newRelease = await deployer.updateRelease(version, stage);
     const pr = await deployer.proposeChange(newRelease, prName, branchName);
+
     printDiff(pr.diff);
+    printColorful(
+      `:rocket: PR ${pr.number} was opened sucesfully ${pr.link} :rocket:`
+    );
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) coreExports.setFailed(error.message);

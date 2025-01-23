@@ -1,5 +1,4 @@
-import printDiff from '../src/colorLogger'
-import { expect } from '@jest/globals'
+import { printDiff } from '../src/colorLogger'
 
 describe('colorLogger.js', () => {
   it('Prints in color', async () => {

@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import printDiff from './colorLogger'
+import { printDiff, printColorful } from './colorLogger'
 import GitHubClient from './github'
 import Deployer from './deployer'
 
@@ -35,7 +35,11 @@ export async function run() {
 
     const newRelease = await deployer.updateRelease(version, stage)
     const pr = await deployer.proposeChange(newRelease, prName, branchName)
+
     printDiff(pr.diff)
+    printColorful(
+      `:rocket: PR ${pr.number} was opened sucesfully ${pr.link} :rocket:`
+    )
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
