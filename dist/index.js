@@ -31345,6 +31345,7 @@ class GitHubClient {
         format: 'diff'
       }
     });
+    console.log(JSON.stringify(prDiff));
     const prDiff = diffResp.data.prDiff;
 
     return new PR(prNumber, prDiff, prLink)
