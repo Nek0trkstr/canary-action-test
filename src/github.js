@@ -116,7 +116,7 @@ export default class GitHubClient {
         format: 'diff'
       }
     })
-    console.log(JSON.stringify(prDiff))
+    console.log(JSON.stringify(diffResp))
     const prDiff = diffResp.data.prDiff
 
     return new PR(prNumber, prDiff, prLink)
