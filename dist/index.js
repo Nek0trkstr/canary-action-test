@@ -38854,7 +38854,7 @@ async function run() {
 
     const newRelease = await deployer.updateRelease(version, stage);
     const pr = await deployer.proposeChange(newRelease, prName, branchName);
-    console.log(JSON.stringify(pr));
+    console.log(pr.diff);
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) coreExports.setFailed(error.message);
