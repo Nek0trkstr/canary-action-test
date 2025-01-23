@@ -27267,6 +27267,14 @@ function requireCore () {
 
 var coreExports = requireCore();
 
+class PR {
+  constructor(number, diff, link) {
+    this.number = number;
+    this.diff = diff;
+    this.link = link;
+  }
+}
+
 var github = {};
 
 var context = {};
@@ -31295,6 +31303,7 @@ class GitHubClient {
   }
 
   async openPR(title, body, headBranch, baseBranch = 'master') {
+    let targetPR;
     let PRCreated = false;
     const openedPRs = await this.client.request(
       'GET /repos/{owner}/{repo}/pulls',
@@ -31309,22 +31318,35 @@ class GitHubClient {
       const headBranchPR = pr.head.ref;
       if (headBranchPR == headBranch) {
         PRCreated = true;
+        targetPR = pr;
       }
     });
 
     if (PRCreated) {
       console.log('PR is already created - skipping PR creation');
-      return
+    } else {
+      targetPR = await this.client.rest.pulls.create({
+        owner: this.owner,
+        repo: this.repo,
+        head: headBranch,
+        base: baseBranch,
+        title: title,
+        body: body
+      }).data;
     }
 
-    return await this.client.rest.pulls.create({
+    const prNumber = targetPR.number;
+    const prLink = targetPR._links.html;
+    const prDiff = await this.client.rest.pulls.get({
       owner: this.owner,
       repo: this.repo,
-      head: headBranch,
-      base: baseBranch,
-      title: title,
-      body: body
-    })
+      pull_number: prNumber,
+      mediaType: {
+        format: 'diff'
+      }
+    }).data.prDiff;
+
+    return new PR(prNumber, prDiff, prLink)
   }
 }
 
@@ -38794,8 +38816,8 @@ class Deployer {
       updatedRelease,
       branchName
     );
-    const PR = await this.client.openPR(prName, prName, branchName);
-    console.log(JSON.stringify(PR));
+    const pr = await this.client.openPR(prName, prName, branchName);
+    return pr
   }
 }
 
@@ -38830,7 +38852,8 @@ async function run() {
     const branchName = prName.toLowerCase().replaceAll(' ', '-');
 
     const newRelease = await deployer.updateRelease(version, stage);
-    await deployer.proposeChange(newRelease, prName, branchName);
+    const pr = await deployer.proposeChange(newRelease, prName, branchName);
+    console.log(JSON.stringify(pr));
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) coreExports.setFailed(error.message);
