@@ -37,6 +37,7 @@ export default class GitHubClient {
         err.response.data.status == 422 &&
         err.response.data.message == 'Reference already exists'
       ) {
+        console.log(`Branch ${branchName} already exists - skipping`)
         return
       }
     }
@@ -51,7 +52,7 @@ export default class GitHubClient {
     })
 
     const originalFileSHA = originalFile.data.sha
-
+    
     await this.client.rest.repos.createOrUpdateFileContents({
       owner: this.owner,
       repo: this.repo,
