@@ -31839,7 +31839,7 @@ class GitHubClient {
         base: baseBranch,
         title: title,
         body: body
-      }).data;
+      });
     }
 
     const prNumber = targetPR.number;
@@ -39363,9 +39363,7 @@ async function run() {
     const pr = await deployer.proposeChange(newRelease, prName, branchName);
 
     printDiff(pr.diff);
-    printColorful(
-      `:rocket: PR ${pr.number} was opened sucesfully ${pr.link} :rocket:`
-    );
+    printColorful(`PR ${pr.number} was opened sucesfully ${pr.link}`);
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) coreExports.setFailed(error.message);

@@ -103,7 +103,7 @@ export default class GitHubClient {
         base: baseBranch,
         title: title,
         body: body
-      }).data
+      })
     }
 
     const prNumber = targetPR.number
